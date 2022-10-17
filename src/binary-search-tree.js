@@ -57,14 +57,11 @@ class BinarySearchTree {
       }
 
       if (node.data === value) {
-        console.log('this is true');
         return true
       }
       if (value < node.data) {
-        console.log('LESS');
         return hasData(node.left, value)
       } else  {
-        console.log('bigger');     
         return hasData(node.right, value)
       } 
       
@@ -81,14 +78,11 @@ class BinarySearchTree {
       }
 
       if (node.data === value) {
-        console.log('this is true');
         return node
       }
       if (value < node.data) {
-        console.log('LESS');
         return findNode(node.left, value)
-      } else  {
-        console.log('bigger');     
+      } else  {  
         return findNode(node.right, value)
       } 
       
@@ -97,7 +91,43 @@ class BinarySearchTree {
   }
 
   remove(data) {
+    this.rootA = del(this.rootA, data) 
+    function del (node, value) {
+      if (!node) {
+        return null
+      }
+
+      if (value < node.data) {
+        node.left = del(node.left, value)
+        return node
+      } else {
+      if (value > node.data) {
+        node.right = del(node.right, value)
+        return node
+      } else {
+        if (node.left === null && node.right === null) {
+          return null
+        }
+        if (node.right === null && node.left !== null) {
+          return node.left
+        }
+        if (node.left === null && node.right !== null) {
+          return node.right
+        }
+        if (node.left && node.right) {
+          let minRight = node.right
+          while(minRight.left) {
+            minRight = minRight.left
+          }
+          node.data = minRight.data
+          node.right = del(node.right, minRight.data)
+          return node
+        }
+      }
+    }
     
+
+    }
   }
 
   min() {
@@ -128,6 +158,11 @@ class BinarySearchTree {
       
     }
   }
+  info() {
+    console.log(this.rootA);
+    console.log('----------------------');
+    
+  }
 }
 
 module.exports = {
@@ -135,14 +170,14 @@ module.exports = {
 };
 
 // const tree = new BinarySearchTree()
+// tree.info()
 // tree.add(9);
+// tree.info()
 // tree.add(14);
+// tree.info()
 // tree.add(54);
+// tree.info()
 // tree.add(2);
+// tree.info()
 // tree.add(6);
-// tree.add(8);
-// tree.add(31);
-// tree.add(1);
-
-// console.log(tree.max());
-
+// tree.info()
